@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1663195490 source:c:\users\dell\desktop\simulateurs-_courses\simulateurs-_courses\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+
