@@ -15,61 +15,51 @@
         char raceCarColor[20];
         int totalLapTime;
     };
-    int random(){
-        int i, n;
-        time_t t;
-        n = 1;
-        /* Intializes random number generator */
-       srand((unsigned) time(&t));
-       /* Print 1 random numbers from 1 to 3 */
-       for( i = 0 ; i <n ; i++ ) {
-          return  1 + rand() % 3;
-       }
-    }
 
     void printIntro(){
         printf("Bienvenue a notre evenement principal, les fans de course numerique !\n");
         printf("J'espere que tout le monde a pris son gouter car nous allons commencer !\n");
         printf("\n");
-        printf("%d",random());
     }
 
     void printCountDown(){
         printf("Coureurs prets ! Dans... \n");
         for(int i=5;i>=1;i--){
             printf("%d \n",i);
+            //step
             sleep(1);
         }
         printf("Course ! \n");
     }
 
     void printFirstPlaceAfterLap(struct Race race){
-        for(int i=0;i<5;i++){
-            printf("Apres le tour numero %d \n ",race.currentLap+i);
+
+            printf("Apres le tour numero %d \n ",race.currentLap);
             printf("La premiere place est occupee par : %s dans la voiture de course %s \n \n",race.firstPlaceDriverName,race.firstPlaceRaceCarClor);
-            break;
-        }
     }
 
     void printCongratulation(struct Race race){
-            printf("Felicitons tous %s, dans la voiture de course %s, pour son incroyable performance.\n",race.firstPlaceDriverName,race.firstPlaceRaceCarClor);
+            printf("Felicitations tous %s, dans la voiture de course %s, pour son incroyable performance.\n",race.firstPlaceDriverName,race.firstPlaceRaceCarClor);
             printf("C etait vraiment une belle course et bonne nuit a tous ! \n");
     }
 
-        int calculateTimeToCompleteLap(){
-            int vitesse = random();
-            int acceleration = random();
-            int nerves = random();
+        int calculateTime(){
+            int vitesse = 1 + rand() % 3;
+            int acceleration = 1 + rand() % 3;
+            int nerves = 1 + rand() % 3;
+            //la somme Time racecar
             return vitesse + acceleration + nerves;
         }
 
         void updateRaceCar(struct RaceCar *racecar){
-            (*racecar).totalLapTime = (*racecar).totalLapTime + calculateTimeToCompleteLap();
+                //addition et stocke la somme dans totallaptime
+            (*racecar).totalLapTime = (*racecar).totalLapTime + calculateTime();
         }
 
         void updateFirstPlace(struct Race *race,struct RaceCar *racecar1,struct RaceCar *racecar2){
-            //condition time
+            //condition timeToltal
             if((*racecar1).totalLapTime <= (*racecar2).totalLapTime){
+                    //stockage name drive et color racecar
                 strcpy((*race).firstPlaceDriverName,(*racecar1).driveName);
                 strcpy((*race).firstPlaceRaceCarClor,(*racecar1).raceCarColor);
             }
@@ -80,32 +70,40 @@
         }
 
         void startRace(struct RaceCar *racecar1 ,struct RaceCar *racecar2){
+                    //initialiser race
             struct Race race={5,1,"",""};
+              srand(time(0));
               for(int i=0;i<race.numbreOflaps;i++){
-                    //incrémentation time
+
+                    //modofier totaltime
                 updateRaceCar(racecar1);
                 updateRaceCar(racecar2);
-                    //afficher
+                    //afficher name drive et color racecar
                 updateFirstPlace(&race,racecar1,racecar2);
                 sleep(1);
+                    //la premier sur la tour
                 printFirstPlaceAfterLap(race);
+                race.currentLap++;
                 sleep(1);
               }
+              //Felicitations
             printCongratulation(race);
         }
 
 
 int main()
 {
-
-    printf("%",random());
+  srand(time(0));
     printIntro();
     printCountDown();
-
-    struct RaceCar racecar1={"ALI","RED",0};
-    struct RaceCar racecar2={"Med","BLACK",0};
-
+        //initialiser raeccar
+        struct RaceCar racecar1={"ALI","RED",0};
+        struct RaceCar racecar2={"Med","BLACK",0};
     startRace(&racecar1,&racecar2);
+
+
+
+
 
 
 
